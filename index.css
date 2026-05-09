@@ -7,12 +7,12 @@
 
 /* — CSS Custom Properties — */
 :root {
-  /* Brand Colors (derived from logo – warm coral-red) */
-  --color-primary: #D05B55;
-  --color-primary-light: #E07068;
-  --color-primary-dark: #A84640;
-  --color-primary-subtle: rgba(208, 91, 85, 0.08);
-  --color-primary-glow: rgba(208, 91, 85, 0.25);
+  /* Brand Colors (zartgrün – soft green) */
+  --color-primary: #6BAF7C;
+  --color-primary-light: #82C48E;
+  --color-primary-dark: #4E8A5C;
+  --color-primary-subtle: rgba(107, 175, 124, 0.08);
+  --color-primary-glow: rgba(107, 175, 124, 0.25);
 
   /* Surfaces */
   --color-surface: #FAFAF8;
@@ -27,12 +27,12 @@
   --color-text-inverse: #FFFFFF;
 
   /* Dark */
-  --color-dark: #1A1215;
-  --color-dark-card: rgba(26, 18, 21, 0.85);
+  --color-dark: #141E17;
+  --color-dark-card: rgba(20, 30, 23, 0.85);
 
   /* Borders */
   --color-border: rgba(0, 0, 0, 0.06);
-  --color-border-hover: rgba(208, 91, 85, 0.3);
+  --color-border-hover: rgba(107, 175, 124, 0.3);
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -184,12 +184,12 @@ p {
 .btn-primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   color: var(--color-text-inverse);
-  box-shadow: 0 4px 16px rgba(208, 91, 85, 0.3);
+  box-shadow: 0 4px 16px rgba(107, 175, 124, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(208, 91, 85, 0.4);
+  box-shadow: 0 8px 28px rgba(107, 175, 124, 0.4);
 }
 
 .btn-outline {
@@ -354,7 +354,7 @@ p {
 .nav-cta:hover {
   background: var(--color-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(208, 91, 85, 0.3);
+  box-shadow: 0 4px 16px rgba(107, 175, 124, 0.3);
 }
 
 /* Mobile Menu Toggle */
@@ -436,9 +436,9 @@ p {
   z-index: 2;
   background: linear-gradient(
     135deg,
-    rgba(26, 18, 21, 0.7) 0%,
-    rgba(26, 18, 21, 0.3) 50%,
-    rgba(208, 91, 85, 0.15) 100%
+    rgba(20, 30, 23, 0.7) 0%,
+    rgba(20, 30, 23, 0.3) 50%,
+    rgba(107, 175, 124, 0.15) 100%
   );
 }
 
@@ -672,7 +672,7 @@ p {
    STATS SECTION
    ============================================================ */
 .stats-section {
-  background: linear-gradient(135deg, var(--color-dark) 0%, #2A1A1E 100%);
+  background: linear-gradient(135deg, var(--color-dark) 0%, #1A2E1F 100%);
   padding: var(--space-8) 0;
 }
 
@@ -745,12 +745,12 @@ p {
   color: var(--color-primary-subtle);
   line-height: 1;
   flex-shrink: 0;
-  color: rgba(208, 91, 85, 0.15);
+  color: rgba(107, 175, 124, 0.15);
   transition: color var(--transition-base);
 }
 
 .why-card:hover .why-number {
-  color: rgba(208, 91, 85, 0.3);
+  color: rgba(107, 175, 124, 0.3);
 }
 
 .why-content h3 {
@@ -1381,7 +1381,7 @@ p {
     border-radius: var(--radius-full);
     background: var(--color-primary);
     color: white !important;
-    box-shadow: 0 4px 16px rgba(208, 91, 85, 0.3);
+    box-shadow: 0 4px 16px rgba(107, 175, 124, 0.3);
   }
   
   .main-nav .nav-cta:hover {
