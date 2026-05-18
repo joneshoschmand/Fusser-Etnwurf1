@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initHeroParallax();
   initActiveNavHighlight();
+  initServiceCardHighlight();
 });
 
 /* — Scroll Reveal (IntersectionObserver) — */
@@ -306,4 +307,53 @@ function initContactForm() {
       field.style.borderColor = '';
     });
   });
+}
+
+/* — Service Card Highlight on Scroll (Mobile) — */
+function initServiceCardHighlight() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cards = document.querySelectorAll('.service-card');
+  if (!cards.length) return;
+
+  // Only activate on mobile viewports
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function clearActive() {
+    cards.forEach(c => c.classList.remove('card-active'));
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!isMobile()) { clearActive(); return; }
+
+      // Find the entry with the highest intersection ratio
+      let best = null;
+      entries.forEach(entry => {
+        if (!best || entry.intersectionRatio > best.intersectionRatio) {
+          best = entry;
+        }
+      });
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+          entry.target.classList.add('card-active');
+        } else {
+          entry.target.classList.remove('card-active');
+        }
+      });
+    },
+    {
+      threshold: [0, 0.3, 0.55, 0.8, 1.0],
+      rootMargin: '-10% 0px -10% 0px'
+    }
+  );
+
+  cards.forEach(card => observer.observe(card));
+
+  // Re-evaluate on resize
+  window.addEventListener('resize', () => {
+    if (!isMobile()) clearActive();
+  }, { passive: true });
 }

@@ -421,7 +421,7 @@ p {
   height: 100%;
   object-fit: cover;
   object-position: center 25%;
-  filter: brightness(0.45);
+  filter: brightness(0.65);
   transform: scale(1.05);
   transition: transform 8s ease-out;
 }
@@ -435,10 +435,10 @@ p {
   inset: 0;
   z-index: 2;
   background: linear-gradient(
-    135deg,
-    rgba(76, 175, 80, 0.6) 0%,
-    rgba(76, 175, 80, 0.3) 50%,
-    rgba(129, 199, 132, 0.15) 100%
+    160deg,
+    rgba(255, 252, 245, 0.18) 0%,
+    rgba(255, 252, 245, 0.08) 50%,
+    rgba(255, 252, 245, 0.02) 100%
   );
 }
 
@@ -510,6 +510,16 @@ p {
    ============================================================ */
 .section {
   padding: var(--space-12) 0;
+}
+
+/* Sanfte grüne Akzent-Unterlegung für weiße Sections */
+.section-green-hint {
+  background: linear-gradient(
+    180deg,
+    rgba(232, 245, 233, 0.55) 0%,
+    rgba(241, 248, 241, 0.30) 50%,
+    #FAFAF8 100%
+  );
 }
 
 .section-alt {
@@ -663,6 +673,50 @@ p {
 .service-card h3 {
   margin-bottom: var(--space-1);
 }
+
+/* ============================================================
+   SERVICE CARD – Mobile Scroll-Highlight
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Nicht-aktive Karten leicht zurücknehmen */
+  .services-grid:has(.card-active) .service-card:not(.card-active) {
+    opacity: 0.55;
+    transform: scale(0.97);
+  }
+
+  /* Aktive Karte hervorheben */
+  .service-card.card-active {
+    background: #ffffff;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+    transform: scale(1.02);
+    opacity: 1;
+  }
+
+  .service-card.card-active::before {
+    opacity: 1;
+  }
+
+  .service-card.card-active .service-icon {
+    background: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.35);
+  }
+
+  .service-card.card-active .service-icon svg {
+    color: white;
+  }
+
+  @supports not selector(:has(*)) {
+    /* Fallback ohne :has() – aktive Karte trotzdem hervorheben */
+    .service-card.card-active {
+      background: #ffffff;
+      border-color: var(--color-primary-light);
+      box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18);
+      transform: scale(1.02);
+    }
+  }
+}
+
 
 .service-card p {
   font-size: 0.9375rem;
@@ -828,7 +882,12 @@ p {
    PROCESS / ABLAUF SECTION
    ============================================================ */
 .process-section {
-  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-alt) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(220, 237, 200, 0.25) 0%,
+    rgba(232, 245, 233, 0.35) 40%,
+    var(--color-surface-alt) 100%
+  );
 }
 
 .process-timeline {
