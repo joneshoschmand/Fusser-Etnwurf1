@@ -371,6 +371,8 @@ function initSuccessPopup() {
 
   if (!overlay || !fsSuccess) return;
 
+  let autoCloseTimer;
+
   function openPopup() {
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -384,11 +386,7 @@ function initSuccessPopup() {
 
   // Watch for Formspree setting the success element visible
   const observer = new MutationObserver(() => {
-    const isVisible =
-      fsSuccess.style.display === 'block' ||
-      (getComputedStyle(fsSuccess).display !== 'none' &&
-       !fsSuccess.hasAttribute('hidden'));
-    if (isVisible) openPopup();
+    if (fsSuccess.style.display === 'block') openPopup();
   });
 
   observer.observe(fsSuccess, { attributes: true, attributeFilter: ['style', 'hidden'] });

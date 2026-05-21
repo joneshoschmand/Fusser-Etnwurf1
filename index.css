@@ -1233,8 +1233,7 @@ p {
   animation: fadeIn 0.4s ease;
 }
 
-.form-success-message[style*="display: block"],
-.form-success-message:not([style*="display: none"]):not([hidden]) {
+.form-success-message[style*="display: block"] {
   display: flex;
 }
 
