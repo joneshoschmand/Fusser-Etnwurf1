@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initModals();
   initContactForm();
+  initSuccessPopup();
   initHeroParallax();
   initActiveNavHighlight();
   initServiceCardHighlight();
@@ -361,4 +362,45 @@ function initServiceCardHighlight() {
   window.addEventListener('resize', () => {
     if (!isMobile()) clearActive();
   }, { passive: true });
+}
+/* — Success Popup (triggered when Formspree marks submission as succeeded) — */
+function initSuccessPopup() {
+  const overlay  = document.getElementById('success-popup');
+  const closeBtn = document.getElementById('success-popup-close');
+  const fsSuccess = document.querySelector('[data-fs-success]');
+
+  if (!overlay || !fsSuccess) return;
+
+  function openPopup() {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closePopup() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Watch for Formspree setting the success element visible
+  const observer = new MutationObserver(() => {
+    const isVisible =
+      fsSuccess.style.display === 'block' ||
+      (getComputedStyle(fsSuccess).display !== 'none' &&
+       !fsSuccess.hasAttribute('hidden'));
+    if (isVisible) openPopup();
+  });
+
+  observer.observe(fsSuccess, { attributes: true, attributeFilter: ['style', 'hidden'] });
+
+  // Close handlers
+  closeBtn.addEventListener('click', closePopup);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup();
+  });
 }
