@@ -1218,6 +1218,69 @@ p {
   margin-top: var(--space-1);
 }
 
+/* Formspree: success message */
+.form-success-message {
+  display: none; /* SDK sets display:block when succeeded */
+  align-items: flex-start;
+  gap: var(--space-2);
+  background: var(--color-primary-subtle);
+  border: 1.5px solid var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  color: var(--color-primary-dark);
+  font-size: 0.9375rem;
+  margin-bottom: var(--space-3);
+  animation: fadeIn 0.4s ease;
+}
+
+.form-success-message[style*="display: block"],
+.form-success-message:not([style*="display: none"]):not([hidden]) {
+  display: flex;
+}
+
+.form-success-message svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-primary);
+  margin-top: 2px;
+}
+
+/* Formspree: global form-level error banner */
+.form-error-banner {
+  display: none;
+  background: #fff5f5;
+  border: 1.5px solid #fc8181;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  color: #c53030;
+  font-size: 0.875rem;
+  margin-bottom: var(--space-2);
+}
+
+.form-error-banner:not(:empty) {
+  display: block;
+}
+
+/* Formspree: per-field inline error text */
+.form-field-error {
+  font-size: 0.75rem;
+  color: #c53030;
+  min-height: 1rem; /* reserve space to prevent layout shift */
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-success-message {
+    animation: none;
+  }
+}
+
 /* ============================================================
    FOOTER
    ============================================================ */

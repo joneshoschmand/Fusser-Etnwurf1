@@ -256,57 +256,62 @@ function initModals() {
   });
 }
 
-/* — Contact Form Validation — */
+/* — Contact Form — Pre-flight validation (Formspree AJAX SDK handles submission) — */
 function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  // The @formspree/ajax CDN script (loaded after main.js) takes over form
+  // submission, field-level errors (data-fs-error), aria-invalid on fields
+  // (data-fs-field), the success message (data-fs-success), and button
+  // state (data-fs-submit-btn).
+  //
+  // This function only adds client-side pre-flight highlighting so users
+  // get instant feedback before the request leaves the browser.
 
-    // Simple validation
-    const vorname = form.querySelector('#vorname');
-    const nachname = form.querySelector('#nachname');
-    const email = form.querySelector('#email');
-    const nachricht = form.querySelector('#nachricht');
+  const requiredFields = ['vorname', 'nachname', 'email', 'nachricht'];
 
+  function markField(field, hasError) {
+    field.style.borderColor = hasError ? 'var(--color-error, #e53e3e)' : '';
+    field.setAttribute('aria-invalid', hasError ? 'true' : 'false');
+  }
+
+  function validateAll() {
     let valid = true;
-    [vorname, nachname, email, nachricht].forEach(field => {
-      if (!field.value.trim()) {
-        field.style.borderColor = '#e53e3e';
-        valid = false;
-      } else {
-        field.style.borderColor = '';
-      }
+
+    requiredFields.forEach(name => {
+      const field = form.querySelector(`[name="${name}"]`);
+      if (!field) return;
+      const empty = !field.value.trim();
+      markField(field, empty);
+      if (empty) valid = false;
     });
 
-    // Email regex
-    if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-      email.style.borderColor = '#e53e3e';
+    // Extra: email format check
+    const emailField = form.querySelector('[name="email"]');
+    if (emailField && emailField.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value)) {
+      markField(emailField, true);
       valid = false;
     }
 
-    if (valid) {
-      const btn = form.querySelector('#submit-btn');
-      btn.textContent = '✓ Nachricht gesendet!';
-      btn.style.background = 'var(--color-primary)';
-      btn.disabled = true;
+    return valid;
+  }
 
-      // Reset after 3 seconds
-      setTimeout(() => {
-        form.reset();
-        btn.innerHTML = 'Nachricht senden <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 10h10M11 6l4 4-4 4"/></svg>';
-        btn.disabled = false;
-      }, 3000);
-    }
-  });
-
-  // Clear validation on input
+  // Clear individual field error on input
   form.querySelectorAll('.form-input, .form-textarea').forEach(field => {
     field.addEventListener('input', () => {
-      field.style.borderColor = '';
+      markField(field, false);
     });
   });
+
+  // Pre-validate before Formspree's own submit handler runs
+  form.addEventListener('submit', (e) => {
+    if (!validateAll()) {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // prevent Formspree from submitting too
+      form.querySelector('[aria-invalid="true"]')?.focus();
+    }
+  }, { capture: true }); // capture: true so we run before the SDK listener
 }
 
 /* — Service Card Highlight on Scroll (Mobile) — */

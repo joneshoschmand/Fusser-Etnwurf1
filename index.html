@@ -334,7 +334,7 @@
                 </div>
                 <div class="contact-item-text">
                   <strong>E-Mail</strong>
-                  <span>Mail folgt</span>
+                  <span><a href="mailto:info@herz-licht-alltagshilfe.de">info@herz-licht-alltagshilfe.de</a></span>
                 </div>
               </div>
 
@@ -361,29 +361,44 @@
 
           <div class="contact-form-card reveal-right">
             <h3>Unverbindlich anfragen</h3>
+
+            <!-- Formspree: global success message -->
+            <div data-fs-success class="form-success-message" role="alert" aria-live="polite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <strong>Vielen Dank!</strong> Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns bald bei Ihnen.
+            </div>
+
+            <!-- Formspree: global form-level error -->
+            <div data-fs-error class="form-error-banner" role="alert" aria-live="polite"></div>
+
             <form id="contact-form" class="form-grid" novalidate>
               <div class="form-group">
                 <label for="vorname" class="form-label">Vorname</label>
-                <input type="text" id="vorname" name="vorname" class="form-input" placeholder="Ihr Vorname" required>
+                <input type="text" id="vorname" name="vorname" class="form-input" placeholder="Ihr Vorname" required data-fs-field>
+                <span class="form-field-error" data-fs-error="vorname" role="alert"></span>
               </div>
               <div class="form-group">
                 <label for="nachname" class="form-label">Nachname</label>
-                <input type="text" id="nachname" name="nachname" class="form-input" placeholder="Ihr Nachname" required>
+                <input type="text" id="nachname" name="nachname" class="form-input" placeholder="Ihr Nachname" required data-fs-field>
+                <span class="form-field-error" data-fs-error="nachname" role="alert"></span>
               </div>
               <div class="form-group full-width">
                 <label for="email" class="form-label">E-Mail</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="ihre@email.de" required>
+                <input type="email" id="email" name="email" class="form-input" placeholder="ihre@email.de" required data-fs-field>
+                <span class="form-field-error" data-fs-error="email" role="alert"></span>
               </div>
               <div class="form-group full-width">
                 <label for="telefon" class="form-label">Telefon</label>
-                <input type="tel" id="telefon" name="telefon" class="form-input" placeholder="+49 123 567890">
+                <input type="tel" id="telefon" name="telefon" class="form-input" placeholder="+49 123 567890" data-fs-field>
+                <span class="form-field-error" data-fs-error="telefon" role="alert"></span>
               </div>
               <div class="form-group full-width">
                 <label for="nachricht" class="form-label">Ihre Nachricht</label>
-                <textarea id="nachricht" name="nachricht" class="form-textarea" placeholder="Beschreiben Sie kurz Ihre Situation oder Ihr Anliegen…" required></textarea>
+                <textarea id="nachricht" name="nachricht" class="form-textarea" placeholder="Beschreiben Sie kurz Ihre Situation oder Ihr Anliegen…" required data-fs-field></textarea>
+                <span class="form-field-error" data-fs-error="nachricht" role="alert"></span>
               </div>
               <div class="form-group full-width form-submit">
-                <button type="submit" class="btn btn-primary" id="submit-btn">
+                <button type="submit" class="btn btn-primary" id="submit-btn" data-fs-submit-btn>
                   Nachricht senden
                   <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 10h10M11 6l4 4-4 4"/></svg>
                 </button>
@@ -423,7 +438,7 @@
           <h4 class="footer-heading">Kontakt</h4>
           <div class="footer-links">
             <span class="footer-link">+49 (0) 160 22 3 4444</span>
-            <span class="footer-link">Mail folgt</span>
+            <a href="mailto:info@herz-licht-alltagshilfe.de" class="footer-link">info@herz-licht-alltagshilfe.de</a>
             <span class="footer-link">Neckarstraße 12<br>67125 Dannstadt-Schauernheim</span>
           </div>
         </div>
@@ -571,5 +586,12 @@
   </div>
 
   <script src="main.js"></script>
+
+  <!-- Formspree AJAX SDK (CDN) -->
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#contact-form', formId: 'mgoqkzjd' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
