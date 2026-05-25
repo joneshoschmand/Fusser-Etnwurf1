@@ -315,10 +315,10 @@ function initContactForm() {
   }, { capture: true }); // capture: true so we run before the SDK listener
 }
 
-/* — Service Card Highlight on Scroll (Mobile) — */
+/* — Service Card / Angebot Block Highlight on Scroll (Mobile) — */
 function initServiceCardHighlight() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const cards = document.querySelectorAll('.service-card');
+  const cards = document.querySelectorAll('.service-card, .angebot-block');
   if (!cards.length) return;
 
   // Only activate on mobile viewports
@@ -333,14 +333,6 @@ function initServiceCardHighlight() {
   const observer = new IntersectionObserver(
     (entries) => {
       if (!isMobile()) { clearActive(); return; }
-
-      // Find the entry with the highest intersection ratio
-      let best = null;
-      entries.forEach(entry => {
-        if (!best || entry.intersectionRatio > best.intersectionRatio) {
-          best = entry;
-        }
-      });
 
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {

@@ -865,6 +865,54 @@ p {
 }
 
 /* ============================================================
+   ANGEBOT BLOCK – Mobile Scroll-Highlight
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Nicht-aktive Blöcke leicht zurücknehmen */
+  .angebot-details:has(.card-active) .angebot-block:not(.card-active) {
+    opacity: 0.55;
+    transform: scale(0.97);
+  }
+
+  /* Aktiver Block hervorheben */
+  .angebot-block.card-active {
+    background: #ffffff;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+    transform: scale(1.02);
+    opacity: 1;
+  }
+
+  .angebot-block.card-active::before {
+    opacity: 1;
+  }
+
+  .angebot-block.card-active .angebot-block-icon {
+    background: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.35);
+  }
+
+  .angebot-block.card-active .angebot-block-icon svg {
+    color: white;
+  }
+
+  /* Coming-soon Block Sonderbehandlung */
+  .angebot-block--coming-soon.card-active {
+    border-style: solid;
+    background: #ffffff;
+  }
+
+  @supports not selector(:has(*)) {
+    .angebot-block.card-active {
+      background: #ffffff;
+      border-color: var(--color-primary-light);
+      box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18);
+      transform: scale(1.02);
+    }
+  }
+}
+
+/* ============================================================
    STATS SECTION
    ============================================================ */
 .stats-section {

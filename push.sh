@@ -8,7 +8,7 @@ git status
 echo "=== Adding all files ==="
 git add -A
 echo "=== Committing ==="
-git commit -m "Update: Hero-Titel ergänzt, Angebot-Sektion mit Leistungen/Voraussetzungen/Kosten neu gestaltet, Firmenname im Kontakt korrigiert" || echo "Nothing to commit"
+git commit -m "Feature: Mobile Scroll-Highlight für Angebot-Blöcke hinzugefügt" || echo "Nothing to commit"
 echo "=== Pushing to GitHub ==="
 git push -u origin main --force
 echo "=== Done ==="
