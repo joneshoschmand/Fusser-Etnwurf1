@@ -1634,6 +1634,16 @@ p {
   color: var(--color-primary-light);
 }
 
+.footer-creator a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.footer-creator a:hover {
+  color: var(--color-primary-light);
+}
+
 /* ============================================================
    MODALS (Impressum / Datenschutz)
    ============================================================ */
