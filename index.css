@@ -856,12 +856,162 @@ p {
   margin-bottom: var(--space-4);
 }
 
-.kosten-table-wrap {
+.kosten-table-block {
   margin: var(--space-3) 0 var(--space-5);
+  position: relative;
+}
+
+.kosten-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
+}
+
+/* Rechter Verlauf als Hinweis auf scrollbaren Inhalt (nur mobil sichtbar) */
+.kosten-table-block::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9));
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.kosten-table-block.is-scrollable::after {
+  opacity: 1;
+}
+
+.kosten-table-block.is-scrolled-end::after {
+  opacity: 0;
+}
+
+/* Wisch-/Tipp-Hinweis – nur auf kleinen Screens */
+.kosten-hint {
+  display: none;
+  width: 100%;
+  margin-top: var(--space-2);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-primary-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-primary-dark);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* Hinweis nur zeigen, wenn die Tabelle tatsächlich horizontal scrollt (mobil) */
+.kosten-table-block.is-scrollable .kosten-hint {
+  display: flex;
+}
+
+.kosten-table-block.is-scrollable .kosten-table-wrap {
+  cursor: pointer;
+}
+
+.kosten-hint:hover,
+.kosten-hint:active {
+  background: rgba(76, 175, 80, 0.16);
+  border-color: var(--color-border-hover);
+}
+
+.kosten-hint strong {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.kosten-hint__swipe {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  color: var(--color-primary);
+  animation: kosten-swipe 1.8s ease-in-out infinite;
+}
+
+@keyframes kosten-swipe {
+  0%, 100% { transform: translateX(-3px); }
+  50%      { transform: translateX(3px); }
+}
+
+/* Kosten-Modal – Karten je Pflegegrad */
+.kosten-modal-sub {
+  margin-top: calc(var(--space-2) * -1 + 4px);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.kosten-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.kmcard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  background: var(--color-surface);
+}
+
+.kmcard__grade {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.kmcard__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 6px 0;
+  font-size: 0.9375rem;
+}
+
+.kmcard__row dt {
+  color: var(--color-text-muted);
+}
+
+.kmcard__row dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.kmcard__row--total {
+  margin-top: 6px;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.kmcard__row--total dt {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.kmcard__row--total dd {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  font-size: 1.0625rem;
 }
 
 .kosten-table {

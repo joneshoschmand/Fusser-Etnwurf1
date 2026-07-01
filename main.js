@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParallax();
   initActiveNavHighlight();
   initServiceCardHighlight();
+  initKostenTable();
 });
 
 /* — Scroll Reveal (IntersectionObserver) — */
@@ -254,6 +255,97 @@ function initModals() {
         document.body.style.overflow = '';
       });
     }
+  });
+}
+
+/* — Kosten-Tabelle — Mobiler Wisch-/Tipp-Hinweis + Popup mit voller Tabelle — */
+function initKostenTable() {
+  const block = document.querySelector('.kosten-table-block');
+  const wrap = document.getElementById('kostenTableWrap');
+  const table = wrap && wrap.querySelector('.kosten-table');
+  const modal = document.getElementById('kosten-modal');
+  const hint = document.getElementById('kostenHint');
+  if (!block || !wrap || !table || !modal) return;
+
+  const modalBody = modal.querySelector('#kostenModalBody');
+  const closeBtn = modal.querySelector('.modal-close');
+
+  /* Modal-Inhalt einmalig aus den Tabellendaten aufbauen (eine Karte je Pflegegrad) */
+  function buildCards() {
+    const headers = [...table.querySelectorAll('thead th')].map(th => th.textContent.trim());
+    const rows = table.querySelectorAll('tbody tr');
+    const frag = document.createDocumentFragment();
+
+    rows.forEach(row => {
+      const cells = [...row.children];
+      const card = document.createElement('div');
+      card.className = 'kmcard';
+
+      const grade = document.createElement('div');
+      grade.className = 'kmcard__grade';
+      grade.textContent = cells[0].textContent.trim();
+      card.appendChild(grade);
+
+      const dl = document.createElement('dl');
+      cells.forEach((cell, i) => {
+        if (i === 0) return; // Pflegegrad ist die Überschrift
+        const isTotal = cell.classList.contains('kosten-total');
+        const rowEl = document.createElement('div');
+        rowEl.className = 'kmcard__row' + (isTotal ? ' kmcard__row--total' : '');
+        const dt = document.createElement('dt');
+        dt.textContent = headers[i] || '';
+        const dd = document.createElement('dd');
+        dd.textContent = cell.textContent.trim();
+        rowEl.append(dt, dd);
+        dl.appendChild(rowEl);
+      });
+      card.appendChild(dl);
+      frag.appendChild(card);
+    });
+
+    modalBody.innerHTML = '';
+    modalBody.appendChild(frag);
+  }
+
+  /* Scroll-Zustand des Wrappers spiegeln (Hinweis + rechter Verlauf) */
+  function updateScrollState() {
+    const scrollable = wrap.scrollWidth - wrap.clientWidth > 4;
+    block.classList.toggle('is-scrollable', scrollable);
+    const atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 4;
+    block.classList.toggle('is-scrolled-end', scrollable && atEnd);
+  }
+
+  function openModal() {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  buildCards();
+  updateScrollState();
+  window.addEventListener('resize', updateScrollState, { passive: true });
+  wrap.addEventListener('scroll', updateScrollState, { passive: true });
+
+  /* Öffnen: Hinweis-Button immer, Tabelle nur wenn sie überläuft (mobil) */
+  hint && hint.addEventListener('click', openModal);
+  wrap.addEventListener('click', () => {
+    if (block.classList.contains('is-scrollable')) openModal();
+  });
+  wrap.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && block.classList.contains('is-scrollable')) {
+      e.preventDefault();
+      openModal();
+    }
+  });
+
+  /* Schließen: Button, Overlay-Klick (Escape wird global in initModals behandelt) */
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
   });
 }
 

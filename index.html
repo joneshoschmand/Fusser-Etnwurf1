@@ -162,7 +162,8 @@
             <p class="kosten-intro">Nach einem kostenlosen und unverbindlichen Beratungsgespräch ermitteln wir gemeinsam den tatsächlichen Bedarf und erstellen für Sie ein individuelles, transparentes Angebot – nachvollziehbar und ohne versteckte Kosten.</p>
             <p class="kosten-intro">Die nachfolgende Beispielrechnung dient zur Orientierung und zeigt, wie sich die monatlichen Kosten unter Berücksichtigung der Leistungen der Pflegeversicherung reduzieren können.</p>
 
-            <div class="kosten-table-wrap">
+            <div class="kosten-table-block">
+              <div class="kosten-table-wrap" id="kostenTableWrap" role="button" tabindex="0" aria-label="Kostentabelle vergrößert anzeigen">
               <table class="kosten-table">
                 <thead>
                   <tr>
@@ -218,6 +219,13 @@
                   </tr>
                 </tbody>
               </table>
+              </div>
+              <button type="button" class="kosten-hint" id="kostenHint">
+                <svg class="kosten-hint__swipe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M8 9l-3 3 3 3M16 9l3 3-3 3M5 12h14"/>
+                </svg>
+                <span>Nach rechts wischen für die ganze Tabelle&nbsp;–&nbsp;oder <strong>tippen zum Vergrößern</strong></span>
+              </button>
             </div>
 
             <h4 class="kosten-subhead">Weitere Möglichkeiten zur Kostenreduzierung</h4>
@@ -689,6 +697,18 @@
       </ul>
       <p><strong>Speicherdauer</strong></p>
       <p>Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese löschen oder die Speicherdauer abläuft.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       KOSTEN MODAL (Beispielrechnung – mobil)
+       ============================================================ -->
+  <div class="modal-overlay kosten-modal-overlay" id="kosten-modal" role="dialog" aria-labelledby="kosten-modal-title" aria-modal="true">
+    <div class="modal-content kosten-modal-content">
+      <button class="modal-close" aria-label="Schließen">&times;</button>
+      <h2 id="kosten-modal-title">Kosten im Überblick</h2>
+      <p class="kosten-modal-sub">Beispielrechnung je Pflegegrad</p>
+      <div class="kosten-modal-body" id="kostenModalBody"><!-- wird per JS aus der Tabelle befüllt --></div>
     </div>
   </div>
 
